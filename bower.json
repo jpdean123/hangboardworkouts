@@ -1,0 +1,10 @@
+{
+  "name": "hangboardworkouts",
+  "version": "0.3.0",
+  "dependencies": {
+    "jquery": "~2.0.1",
+    "requirejs": "~2.1.6",
+    "history.js": "latest",
+    "bootstrap.css": "~2.3.2"
+  }
+}
