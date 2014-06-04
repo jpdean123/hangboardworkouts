@@ -22,6 +22,11 @@
 				<button onclick="pausetimer()" class="btn-child btn btn-primary btn-lg">Pause</button>
 				<button onclick="resettimer()" class="btn-child btn btn-danger btn-lg">Reset</button>
 			</div>
+			<select id="workout_select">
+				<option>Pick One</option>
+  				<option>Entry</option>
+  				<option>Intermediate</option>
+			</select>
 			<div class="split-row">
 				<div class="split-row-child">
 					<h2>Current:</h2>
@@ -36,15 +41,25 @@
 
 	</div>
 		
-		
-		
-		
-		
 
 		
-		
-		
-		
 	</div> 
+
+	<script type="text/javascript">
+	
+$('#workout_select').change(function(){
+		var selection = $('#workout_select').val();
+		if(selection == "Entry") {
+			messages = entrylevel;
+
+		} else {
+			if (selection == "Intermediate") {
+				messages = intermediatelevel;
+			} else {
+				console.log('catch all');
+			};
+		};
+	});
+	</script>
 </body>
 </html>
