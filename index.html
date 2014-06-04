@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>hangboardworkouts</title>
+  <link rel="stylesheet" type="text/css" href="vendors/bootstrap.css/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <script src="scripts/libs/require-jquery.min.js" main-data="main"></script>
+  <script src="scripts/timer.js"></script>
+  </script>
+</head>
+<body>
+	<div class="container">
+		<h1>Your Workout</h1>
+		<div class="stopwatch">
+			<p><span id="timer">10:00</span></p>
+			<p>Something New!</p>
+		</div>	
+		
+		
+		<div>
+			<button onclick="starttimer()" class="btn btn-success btn-lg">Start!</button>
+			<button onclick="pausetimer()" class="btn btn-primary btn-lg">Pause</button>
+			<button onclick="resettimer()" class="btn btn-danger btn-lg">Reset</button>
+		</div>
+		
+
+		<div class="split-row">
+			<div class="split-row-child">
+				<h2>Current:</h2>
+				<div id="message_current"></div>
+			</div>
+			<div class="split-row-child">
+				<h2>Next:</h2>
+				<div id="message_next"></div>
+			</div>
+
+		</div>
+		
+		
+		
+	</div> 
+</body>
+</html>

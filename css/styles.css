@@ -1,0 +1,18 @@
+#timer {
+	font-size: 10em;
+	padding: 2em;
+
+}
+
+.split-row{
+	display: flex;
+
+}
+
+.split-row-child {
+	margin: auto;
+}
+
+.stopwatch {
+	margin: 2em;
+}
