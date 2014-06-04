@@ -1,3 +1,19 @@
+$('#single').change(function(){
+		var selection = $('#single').val();
+		if(selection == "Entry") {
+			console.log('true');
+			messages = entrylevel;
+
+		} else {
+			if (selection == "Intermediate") {
+				console.log('inter');
+				messages = intermediatelevel;
+			} else {
+				console.log('catch all');
+			};
+		};
+	});
+
 $(document).ready(init());
 
 
@@ -14,7 +30,10 @@ function init() {
 	$('#message_current').html("");
 	$('#message_next').html("");
 
-}
+
+
+};
+
 
 
 
@@ -32,7 +51,9 @@ function starttimer() {
 
 
 var messagestart = "Let's get started";
-var messages = [
+
+
+var entrylevel = [
 	"15 second hang, Jug",
 	"1 pull-up, Round Sloper",
 	"10 second hang, Medium Edge",
@@ -45,6 +66,24 @@ var messages = [
 	"Hang as long as you can, Round Sloper"
 
 ];
+
+var intermediatelevel = [
+	"15 second hang, 3 pull-ups, Large Edge",
+	"2 pull ups, Round Sloper then 20 second hang, Medium Edge",
+	"20 second hang, Small Edge then 15 second 90&deg bent arm hang, Pocket",
+	"30 second hang, Round Sloper",
+	"20 second hang, Large Edge then 4 pull-ups, Pocket",
+	"3 offset pulls each arm (high arm jug, low arm small hold), Jug/Small Edge Change hands and repeat",
+	"15 knee raises, Jug then 15 second hang, Medium Edge",
+	"25 second hang, Medium Edge",
+	"15 second hang, Slope then 3 pull-ups, Jug",
+	"Hang as long as you can, Round Sloper"
+];
+
+
+var messages = intermediatelevel;
+
+
 
 function timer () {
 	count = count-1;
