@@ -6,8 +6,14 @@ function init() {
 	startcount = count;
 	var minutes = Math.floor(count / 60);
 	var seconds = count - minutes * 60;
-	console.log(minutes + " " + seconds);
-	$('#timer').html(minutes + ':' + seconds);
+	if (seconds === 0) {
+		$('#timer').html(minutes + ':' + seconds + '0');
+	} else {
+		$('#timer').html(minutes + ':' + seconds);
+	};
+	$('#message_current').html("");
+	$('#message_next').html("");
+
 }
 
 
@@ -17,7 +23,11 @@ function starttimer() {
 	counter = setInterval(timer,1000); //will run timer every 1 second
 	var minutes = Math.floor(count / 60);
 	var seconds = count - minutes * 60;
-	$('#timer').html(minutes + ':' + seconds);
+	if (seconds === 0) {
+		$('#timer').html(minutes + ':' + seconds + '0');
+	} else {
+		$('#timer').html(minutes + ':' + seconds);
+	};
 };
 
 
@@ -73,3 +83,18 @@ function timer () {
 
 	
 };
+
+
+function resettimer() {
+	clearInterval(counter);
+	init();
+
+
+	//eventually actually reset the timer instead of page reload
+	//location.reload();
+};
+
+function pausetimer() {
+	clearInterval(counter);
+
+}
