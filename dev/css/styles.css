@@ -1,18 +1,60 @@
-#timer {
-	font-size: 10em;
-	padding: 2em;
+body {
 
 }
 
+.maincontent {
+	margin-top: 2em;
+	display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: column;
+   flex-direction: column;
+   -webkit-align-items: center;
+   align-items: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+}
+
+.stopwatch {
+	width: 80%;
+	text-align: center;
+	margin-bottom: 3em;
+}
+
+#timer {
+	font-size: 10em;
+
+}
+
+.btnrow {
+	display: flex;
+	width: 80%;
+	justify-content: space-between;
+	margin-bottom: 2em;
+}
+
+.btn-child {
+	height: 2em;
+	width: 30%;
+	font-size: 1.5em;
+
+}
+
+
 .split-row{
 	display: flex;
+	width: 80%;
+	margin-bottom: 2em;
 
 }
 
 .split-row-child {
-	margin: auto;
+	justify-content: space-between;
+	width: 45%;
+	text-align: center;
 }
 
-.stopwatch {
-	margin: 2em;
+
+.workout_msg {
+	font-size: 2em;
+	line-height: 150%;
 }
