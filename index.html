@@ -26,6 +26,7 @@
 				<option>Pick One</option>
   				<option>Entry</option>
   				<option>Intermediate</option>
+  				<option>10 Mins Pullup Power</option>
 			</select>
 			<div class="split-row">
 				<div class="split-row-child">
@@ -56,10 +57,15 @@ $('#workout_select').change(function(){
 			if (selection == "Intermediate") {
 				messages = intermediatelevel;
 			} else {
-				console.log('catch all');
+				if (selection == "10 Mins Pullup Power") {
+					messages = pulluppowerten;
+				} else{
+					console.log('catch all');
+				}
 			};
 		};
 	});
 	</script>
+<audio preload="auto" id="beepsound" src="assets/beep-02.mp3"></audio>
 </body>
 </html>

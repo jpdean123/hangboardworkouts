@@ -1,19 +1,3 @@
-$('#single').change(function(){
-		var selection = $('#single').val();
-		if(selection == "Entry") {
-			console.log('true');
-			messages = entrylevel;
-
-		} else {
-			if (selection == "Intermediate") {
-				console.log('inter');
-				messages = intermediatelevel;
-			} else {
-				console.log('catch all');
-			};
-		};
-	});
-
 $(document).ready(init());
 
 
@@ -80,6 +64,19 @@ var intermediatelevel = [
 	"Hang as long as you can, Round Sloper"
 ];
 
+var pulluppowerten = [
+	"5 pullups",
+	"1 frenchie",
+	"10 pullups",
+	"20 seconds bent arm lock-off",
+	"5 pullups",
+	"2 frenchies",
+	"20 second 90 &deg lock-off",
+	"10 pullups",
+	"1 frenchie",
+	"10 pullups"
+];
+
 
 var messages = intermediatelevel;
 
@@ -103,7 +100,6 @@ function timer () {
 
 
 	if (minutes == 0) {
-		$('#message_current').html('Your Next Workout');
 		$('#message_next').html('All Done');
 	};
 
@@ -118,7 +114,12 @@ function timer () {
 		} else {
 			$('#timer').html(minutes + ':' + seconds);
 
-		}
+		};
+
+	if (seconds == 0) {
+		var audio = $('#beepsound')[0];
+			audio.play();
+	};
 
 	
 };
