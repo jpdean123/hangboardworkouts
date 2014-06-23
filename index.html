@@ -2,31 +2,33 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>hangboardworkouts</title>
+  <title>Hangboard Workouts</title>
 
   <link rel="stylesheet" type="text/css" href="vendors/bootstrap.css/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="vendors/bootstrap.css/css/bootstrap-responsive.css">
 
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <script src="scripts/libs/require-jquery.min.js" main-data="main"></script>
+   <script src="scripts/data.js"></script>
   <script src="scripts/timer.js"></script>
+ 
 </head>
 <body>
 	<div class="container">
 		<div class="maincontent">
 			<div class="stopwatch">
-				<h1 id="timer">10:00</h1>
+				<h1 id="timer">Select Workout</h1>
 			</div>	
 			<div class="btnrow">
-				<button onclick="starttimer()" class="btn-child btn btn-success btn-lg">Start!</button>
+				<button onclick="startWorkout()" class="btn-child btn btn-success btn-lg">Start!</button>
 				<button onclick="pausetimer()" class="btn-child btn btn-primary btn-lg">Pause</button>
 				<button onclick="resettimer()" class="btn-child btn btn-danger btn-lg">Reset</button>
 			</div>
 			<select id="workout_select">
 				<option>Pick One</option>
-  				<option>Entry</option>
-  				<option>Intermediate</option>
-  				<option>10 Mins Pullup Power</option>
+  				<option value="repeaters_basic">Repeaters- Basic</option>
+  				<option value="repeaters_slopers">Repeaters- Slopers</option>
+  				<option value="metolious_beginner">Metolious- Beginner (10 Minutes)</option>
 			</select>
 			<div class="split-row">
 				<div class="split-row-child">
@@ -41,29 +43,14 @@
 		</div>
 
 	</div>
-		
 
 		
-	</div> 
 
 	<script type="text/javascript">
 	
-$('#workout_select').change(function(){
+$('#workout_select').change(function () {
 		var selection = $('#workout_select').val();
-		if(selection == "Entry") {
-			messages = entrylevel;
-
-		} else {
-			if (selection == "Intermediate") {
-				messages = intermediatelevel;
-			} else {
-				if (selection == "10 Mins Pullup Power") {
-					messages = pulluppowerten;
-				} else{
-					console.log('catch all');
-				}
-			};
-		};
+		initWorkout(selection);
 	});
 	</script>
 <audio preload="auto" id="beepsound" src="assets/beep-02.mp3"></audio>
