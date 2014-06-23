@@ -1,133 +1,119 @@
-$(document).ready(init());
+
+var workout
+var countdown;
+var totalSteps;
+var currentStep = 0;
+var repStep = -1;
+var steptime;
 
 
-function init() {
-	count = 600;
-	startcount = count;
-	var minutes = Math.floor(count / 60);
-	var seconds = count - minutes * 60;
-	if (seconds === 0) {
-		$('#timer').html(minutes + ':' + seconds + '0');
-	} else {
-		$('#timer').html(minutes + ':' + seconds);
-	};
-	$('#message_current').html("");
-	$('#message_next').html("");
+function initWorkout(sel) {
+	console.log(sel);
+	workout = eval(sel);
+	console.log(workout);
+	console.log(workout.reps)
+	totalSteps = workout.reps.length;
+	countdown = 4;
+}
 
 
+
+function startWorkout() {
+	workoutCounter = setInterval(workoutTimer, 1000);
 
 };
 
 
 
-
-
-function starttimer() {
-	counter = setInterval(timer,1000); //will run timer every 1 second
-	var minutes = Math.floor(count / 60);
-	var seconds = count - minutes * 60;
-	if (seconds === 0) {
-		$('#timer').html(minutes + ':' + seconds + '0');
-	} else {
-		$('#timer').html(minutes + ':' + seconds);
-	};
-};
-
-
-var messagestart = "Let's get started";
-
-
-var entrylevel = [
-	"15 second hang, Jug",
-	"1 pull-up, Round Sloper",
-	"10 second hang, Medium Edge",
-	"15 second hang w/ 3 shrugs, Pocket",
-	"20 second hang w/ 2 pull-ups, Large Edge",
-	"10 second hang, Round Sloper then 5 knee raises, Pocket",
-	"4 pull-ups, Large Edge",
-	"10 second hang, Medium Edge",
-	"3 pull-ups, Jug",
-	"Hang as long as you can, Round Sloper"
-
-];
-
-var intermediatelevel = [
-	"15 second hang, 3 pull-ups, Large Edge",
-	"2 pull ups, Round Sloper then 20 second hang, Medium Edge",
-	"20 second hang, Small Edge then 15 second 90&deg bent arm hang, Pocket",
-	"30 second hang, Round Sloper",
-	"20 second hang, Large Edge then 4 pull-ups, Pocket",
-	"3 offset pulls each arm (high arm jug, low arm small hold), Jug/Small Edge Change hands and repeat",
-	"15 knee raises, Jug then 15 second hang, Medium Edge",
-	"25 second hang, Medium Edge",
-	"15 second hang, Slope then 3 pull-ups, Jug",
-	"Hang as long as you can, Round Sloper"
-];
-
-var pulluppowerten = [
-	"5 pullups",
-	"1 frenchie",
-	"10 pullups",
-	"20 seconds bent arm lock-off",
-	"5 pullups",
-	"2 frenchies",
-	"20 second 90 &deg lock-off",
-	"10 pullups",
-	"1 frenchie",
-	"10 pullups"
-];
-
-
-var messages = intermediatelevel;
-
-
-
-function timer () {
-	count = count-1;
+function workoutTimer() {
+	countdown = countdown-1;
+	if (currentStep == 0 ) {
+		//convert to minutes and secconds
+		var minutes = Math.floor(countdown / 60);
+		var seconds = countdown - minutes * 60;
 	
-	
-	//convert to minutes/secconds
-	var minutes = Math.floor(count / 60);
-	var seconds = count - minutes * 60;
-	var msgcount = startcount/60 - minutes -1;
-
-	function lessthan10() {
-		$('#timer').html(minutes + ":" + "0" + seconds);
-	}
-
-	$('#message_current').html(messages[msgcount]);
-	$('#message_next').html(messages[msgcount + 1]);
-
-
-	if (minutes == 0) {
-		$('#message_next').html('All Done');
+	//put minutes and seconds on the view
+	$('#timer').html(minutes + ':' + seconds);
+		console.log('get ready:' + countdown);
+		$('#message_current').html('Get Ready!');
+		$('#message_next').html(workout.reps[0].message);
 	};
 
-	if (count <= 0) {
-		$('#timer').html(minutes + ':' + seconds + "0");
-		clearInterval(counter);
-		console.log('timer ended');
-		return
-	};
-	if (seconds < 10) {
-			lessthan10();
+	if (countdown <= 0) {
+		clearInterval(workoutCounter);
+		if (currentStep <= totalSteps-1) {
+			runWorkout();
 		} else {
-			$('#timer').html(minutes + ':' + seconds);
-
+			console.log('workout over');
 		};
 
-	if (seconds == 0) {
-		var audio = $('#beepsound')[0];
-			audio.play();
 	};
-
-	
 };
 
+function runWorkout() {
+	currentStep = currentStep + 1;
+
+		repStep = repStep + 1;
+
+		if (repStep == totalSteps - 1) {
+			$('#message_next').html("You're All Done!");
+		} else {
+			$('#message_next').html(workout.reps[repStep + 1].message);
+		};
+		console.log('RepStep is ' + repStep);
+		steptime = workout.reps[repStep].time;
+		$('#message_current').html(workout.reps[repStep].message);
+		
+
+
+
+	console.log(steptime);
+	var steptimeStart = steptime;
+	stepCounter = setInterval(stepTimer, 1000);
+	//convert to minutes/secconds
+	var minutes = Math.floor(steptime / 60);
+	var seconds = steptime - minutes * 60;
+	
+	//put minutes and seconds on the view
+	$('#timer').html(minutes + ':' + seconds);
+
+
+
+
+};
+
+function stepTimer(){
+	steptime = steptime -1;
+	console.log(steptime);
+
+	//convert to minutes/secconds
+	var minutes = Math.floor(steptime / 60);
+	var seconds = steptime - minutes * 60;
+
+	console.log(minutes + ':' + seconds);
+	
+	//put minutes and seconds on the view
+	$('#timer').html(minutes + ':' + seconds);
+	
+
+	if (steptime <= 0) {
+		clearInterval(stepCounter);
+		var audio = $('#beepsound')[0];
+			audio.play();
+			if (repStep >= totalSteps -1) {
+				$('#message_current').html('You Done');
+				$('#message_next').html('');
+				$('#timer').html("0:00");
+			} else {
+				runWorkout();
+			};
+		
+	};
+
+};
 
 function resettimer() {
-	clearInterval(counter);
-	init();
+	location.reload();
 
 
 	//eventually actually reset the timer instead of page reload
@@ -135,6 +121,6 @@ function resettimer() {
 };
 
 function pausetimer() {
-	clearInterval(counter);
+	clearInterval(stepCounter);
 
 }

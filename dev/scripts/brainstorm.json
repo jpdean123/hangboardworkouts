@@ -1,0 +1,14 @@
+workout //"10 minutes of pullups", "Metolious beginner", "Repeaters"
+	workout name
+	workout description
+	workout steps
+		step 1 
+			name //15 second deadhang // deadhang
+			description //15 second deadhang on jugs
+			duration // 15 // 7 
+		step 2
+			name //rest
+			description //rest until the next event
+			duration // 20 seoncds
+
+
