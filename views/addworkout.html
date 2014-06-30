@@ -1,0 +1,157 @@
+
+	<h1>Add New Workout</h1>
+	<form>
+		Your E-mail: <input type="text" id="submitter_email"/><br/>
+		Title: <input type="text" id="workout_title"/><br/>
+		Primary Hangboard: <input type="text" id="workout_hangboard"/><br/>
+		Description: <input type="text" id="workout_description"/><br/>
+		<table  id="repInfoTable">
+		 
+			<thead>
+				<td></td>
+				<td>Description</td>
+				<td>Rep Message</td>
+				<td>Length (secs)</td>
+			</thead>
+			<tbody>
+				<tr class="singleRep" id="rep0">
+					<td>Rep 1</td>
+					<td><input type="text" placeholder="" id="desc0"/></td>
+					<td><input type="text" placeholder="" id="msg0"/></td>
+					<td><input type="text" placeholder="" id="time0"/></td>
+				</tr>
+				
+			</tbody>
+			
+		</table>
+		<button class="btn btn-success" id="addTheRow">Add Row</button>
+		<button class="btn btn-danger" id="deleteLastRow">Remove Last Row</button><br/><br/>
+		<button class="btn btn-success btn-large" id="submitNewWorkout">Save <span class="glyphicon glyphicon-ok"></span></button>
+	</form>
+
+		
+
+	<script type="text/javascript">
+
+	$('#addTheRow').click(addRow);
+	$('#deleteLastRow').click(deleteLastRow);
+
+	function addRow(event){
+		
+		event.preventDefault();// prevent page refresh on button click
+
+		var table = document.getElementById("repInfoTable");
+		var new_row = table.rows[1].cloneNode(true);
+		var len = table.rows.length;
+		new_row.cells[0].innerHTML = "Rep " + len;
+
+		//add description cell
+		var inp1 = new_row.cells[1].getElementsByTagName('input')[0];
+		inp1.id = "desc" + (len - 1);
+		inp1.value ="";
+
+		//add message cell
+		var inp2 = new_row.cells[2].getElementsByTagName('input')[0];
+		inp2.id = "msg" + (len - 1);
+		inp2.value ="";
+
+		//add time cell
+		var inp3 = new_row.cells[3].getElementsByTagName('input')[0];
+		inp3.id = "time" + (len - 1);
+		inp3.value ="";
+
+		//add to the DOM... end of the table
+		table.appendChild(new_row);
+		var lastRow = table.rows[table.rows.length-1];
+
+	
+	};
+
+	function deleteLastRow(event) {
+		event.preventDefault();// prevent page refresh on button click
+		var table = document.getElementById("repInfoTable");
+		var len = table.rows.length;
+		if (len-1 == 1) {
+			alert("You should not delete the last row.. .then there is no workout!");
+		} else {
+			table.deleteRow(len -1);
+		};
+		
+		
+
+	};
+
+
+
+	$('#submitNewWorkout').click(newWorkout);
+
+	function newWorkout(event) {
+		event.preventDefault(); //prevents the page refresh... can probably remove this later
+		console.log('new workout fired');
+		//declare the arrays
+		var main_info = [];
+		var reps = [];
+		var whole_workout = {};
+
+		//get the variables from the form
+		var workoutTitle = $('#workout_title').val();
+		var workoutHangboard = $('#workout_hangboard').val();
+		var workoutDescription = $('#workout_description').val();
+		var submitteremail = $('#submitter_email').val();
+
+		//put main items into the array
+		//main_info.push(title, hangboard, description);
+
+		//print the array in the console
+		//console.log(main_info);
+
+		var numberOfWorkouts = $('.singleRep').length;
+
+
+		for (var i = 0; i <= numberOfWorkouts - 1 ; i++) {
+			var oneRep = {};
+			var repDescription = $('#desc' + i).val();
+			var repMsg = $('#msg' + i).val();
+			var repTime = $('#time' + i).val();
+
+			//push variables to one rep array
+			oneRep.description = repDescription;
+			oneRep.message = repMsg;
+			oneRep.time = repTime;
+			
+			reps.push(oneRep);
+		};
+		//push all the reps to the whole workout
+		//whole_workout.title = workoutTitle;
+		//whole_workout.description = workoutDescription;
+		//whole_workout.reps = reps;
+		//console.log(whole_workout);
+		//console.log(repeaters_basic);
+
+		//send data to Parse.com
+		var Workouts = Parse.Object.extend("Workouts");
+		var workout = new Workouts();
+ 		
+ 		workout.set("submitter", submitteremail);
+		workout.set("title", workoutTitle);
+		workout.set("description", workoutDescription);
+		workout.set("hangboard", workoutHangboard);
+		workout.set("reps", reps);
+ 
+		workout.save(null, {
+  			success: function(workout) {
+    		// Execute any logic that should take place after the object is saved.
+    			window.location.href = '#/';
+  			},
+  			error: function(workout, error) {
+		    // Execute any logic that should take place if the save fails.
+		    // error is a Parse.Error with an error code and description.
+		    alert('Failed to create new object, with error code: ' + error.message);
+ 			 }
+			});
+
+	   // will want to go back to another page after this function is run
+	};// end of add workout function
+
+
+	</script>

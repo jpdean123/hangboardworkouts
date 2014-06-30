@@ -1,58 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="hbworkoutsApp">
 <head>
   <meta charset="utf-8">
   <title>Hangboard Workouts</title>
 
   <link rel="stylesheet" type="text/css" href="vendors/bootstrap.css/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="vendors/bootstrap.css/css/bootstrap-responsive.css">
 
   <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <script src="scripts/libs/require-jquery.min.js" main-data="main"></script>
-   <script src="scripts/data.js"></script>
+  
+
+  <script type="text/javascript" src="vendors/jquery/jquery.js"></script>
+  <script type="text/javascript" src="angular/angular.js"></script>
+  <script type="text/javascript" src="angular/angular-route.js"></script>
+
+
+  <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+  <script type="text/javascript">
+  	Parse.initialize("MypgpJDYdRB3DvqZR2NyJGtXMRETR4oZFSuYDFkx", "xticaWMz48Cgo2GNSpQC3ceojwdU7O7bZ7gh4Sbf");
+  </script>
+
+  <script type="text/javascript" src="angular/controllers/controller.js"></script>
+  <script type="text/javascript" src="angular/angular.audio.js"></script>
+<!--
+  <script src="scripts/data.js"></script>
   <script src="scripts/timer.js"></script>
+  -->
+
  
 </head>
+
 <body>
 	<div class="container">
-		<div class="maincontent">
-			<div class="stopwatch">
-				<h1 id="timer">Select Workout</h1>
-			</div>	
-			<div class="btnrow">
-				<button onclick="startWorkout()" class="btn-child btn btn-success btn-lg">Start!</button>
-				<button onclick="pausetimer()" class="btn-child btn btn-primary btn-lg">Pause</button>
-				<button onclick="resettimer()" class="btn-child btn btn-danger btn-lg">Reset</button>
-			</div>
-			<select id="workout_select">
-				<option>Pick One</option>
-  				<option value="repeaters_basic">Repeaters- Basic</option>
-  				<option value="repeaters_slopers">Repeaters- Slopers</option>
-  				<option value="metolious_beginner">Metolious- Beginner (10 Minutes)</option>
-			</select>
-			<div class="split-row">
-				<div class="split-row-child">
-					<h2>Current:</h2>
-					<div class="workout_msg" id="message_current"></div>
-				</div>
-				<div class="split-row-child">
-					<h2>Next:</h2>
-				<div class="workout_msg" id="message_next"></div>
-			</div>
-
+		
+		<div ng-view="">
+			
 		</div>
 
 	</div>
 
-		
 
-	<script type="text/javascript">
-	
-$('#workout_select').change(function () {
-		var selection = $('#workout_select').val();
-		initWorkout(selection);
-	});
-	</script>
-<audio preload="auto" id="beepsound" src="assets/beep-02.mp3"></audio>
 </body>
 </html>
