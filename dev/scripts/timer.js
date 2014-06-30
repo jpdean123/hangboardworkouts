@@ -7,14 +7,17 @@ var repStep = -1;
 var steptime;
 
 
-function initWorkout(sel) {
-	console.log(sel);
-	workout = eval(sel);
+function initWorkout() {
+	workout = {{selectedWorkout}};
 	console.log(workout);
-	console.log(workout.reps)
-	totalSteps = workout.reps.length;
+	console.log(workout.get('hangboard'));
+	title = workout.get('title');
+	hangboard = workout.get('hangboard');
+	description = workout.get('description');
+	reps = workout.get('reps');
+	totalSteps = reps.length;
 	countdown = 4;
-}
+};
 
 
 
@@ -36,7 +39,7 @@ function workoutTimer() {
 	$('#timer').html(minutes + ':' + seconds);
 		console.log('get ready:' + countdown);
 		$('#message_current').html('Get Ready!');
-		$('#message_next').html(workout.reps[0].message);
+		$('#message_next').html(reps[0].message);
 	};
 
 	if (countdown <= 0) {
@@ -58,11 +61,11 @@ function runWorkout() {
 		if (repStep == totalSteps - 1) {
 			$('#message_next').html("You're All Done!");
 		} else {
-			$('#message_next').html(workout.reps[repStep + 1].message);
+			$('#message_next').html(reps[repStep + 1].message);
 		};
 		console.log('RepStep is ' + repStep);
-		steptime = workout.reps[repStep].time;
-		$('#message_current').html(workout.reps[repStep].message);
+		steptime = reps[repStep].time;
+		$('#message_current').html(reps[repStep].message);
 		
 
 
@@ -123,4 +126,4 @@ function resettimer() {
 function pausetimer() {
 	clearInterval(stepCounter);
 
-}
+};
