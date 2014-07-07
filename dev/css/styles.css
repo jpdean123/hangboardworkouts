@@ -3,7 +3,7 @@ body {
 }
 
 .maincontent {
-	margin-top: 2em;
+	margin-top: 0em;
 	display: -webkit-flex;
    display: flex;
    -webkit-flex-direction: column;
@@ -17,13 +17,13 @@ body {
 .stopwatch {
 	width: 80%;
 	text-align: center;
-	margin-bottom: 3em;
+	margin-bottom: 0em;
 }
 
 #timer {
-	font-size: 15em;
-	margin-top: .5em;
-	margin-bottom: .5em;
+	font-size: 12em;
+	margin-top: 0;
+	margin-bottom: 0;
 
 }
 
@@ -74,7 +74,8 @@ body {
 }
 
 .workoutTitle {
-
+	margin-top: 0;
+	padding-top: 0;
 }
 
 .workoutInfo {
@@ -83,7 +84,16 @@ body {
 	align-items: center;
 }
 
+.redclass {
+	color:red;
+}
 
+/*--------------------add workout CSS ----------------------------------------------- */
+
+.workout_tables {
+	padding: 1em;
+	text-align: center;
+}
 
 
 

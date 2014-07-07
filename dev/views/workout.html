@@ -1,21 +1,14 @@
 
 		<div class="maincontent">
 			<div class="stopwatch">
-				<h1 id="timer">{{timerMinutes}}:{{timerSeconds}}</h1>
+				<h1 id="timer" ng-class="{'redclass': lastthree}">{{timerMinutes}}:{{timerSeconds}}</h1>
 			</div>	
 			<div class="btnrow">
 				<button ng-click="startWorkout()" class="btn-child btn btn-success btn-lg">Start!</button>
 				<button onclick="pausetimer()" class="btn-child btn btn-primary btn-lg">Pause</button>
 				<button onclick="resettimer()" class="btn-child btn btn-danger btn-lg">Reset</button>
 			</div>
-			<!--
-			<select id="workout_select">
-				<option>Pick One</option>
-  				<option value="repeaters_basic">Repeaters- Basic</option>
-  				<option value="repeaters_slopers">Repeaters- Slopers</option>
-  				<option value="metolious_beginner">Metolious- Beginner (10 Minutes)</option>
-			</select>
-			-->
+		
 			<div class="split-row">
 				<div class="split-row-child">
 					<h2>Current:</h2>

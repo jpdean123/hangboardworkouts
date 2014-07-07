@@ -1,14 +1,25 @@
-var hbworkoutsApp = angular.module('hbworkoutsApp', ['ngRoute', 'ngAudio']);
+var hbworkoutsApp = angular.module('hbworkoutsApp', ['ngRoute', 'angular-growl', 'ngAnimate']);
 
 hbworkoutsApp.config(function ($routeProvider, $locationProvider) {
  
   $routeProvider
     .when('/',
       {
-      	controller: 'homeCtrl',
+      	//controller: 'homeCtrl',
         templateUrl: './views/home.html'
 
       })
+    .when('/search',
+      {
+      	controller: 'searchCtrl',
+        templateUrl: './views/search.html'
+
+      })
+    .when('/search/:searchterms',
+    {
+    	controller: 'searchCtrl',
+    	templateUrl: './views/search.html'
+    })
     .when('/addworkout',
       {
         controller: 'addwWorkoutCtrl',
@@ -21,14 +32,58 @@ hbworkoutsApp.config(function ($routeProvider, $locationProvider) {
         templateUrl: './views/workout.html'
 
       })
+    .when('/testpage',
+    {
+    	controller: 'testCtrl',
+    	templateUrl: './views/testpage.html'
+    })
     .otherwise({ redirectTo: '/' });
 
 });
 
 
-hbworkoutsApp.controller('homeCtrl', ['$scope', '$http', '$location', function ($scope, $q, $location, $http) {
+hbworkoutsApp.config(['growlProvider',
+	function (growlProvider){
+		growlProvider.globalTimeToLive(5000);
+	}]);
+
+hbworkoutsApp.controller('testCtrl',
+	['$scope', 'growl', 
+	function ($scope, growl) {
+		$scope.myVar = "hello world";
+
+		$scope.addSpecialWarnMessage = function() {
+        growl.addWarnMessage("This adds a warn message", {ttl:5000});
+        growl.addInfoMessage("This adds a info message", {ttl:10000});
+        growl.addSuccessMessage("This adds a success message");
+        growl.addErrorMessage("This adds a error message");
+    };
+
+    $scope.addSpecialWarnMessage();
+
+	}]);
+
+hbworkoutsApp.controller('navCtrl',
+	['$scope', '$http', '$location',
+	function ($scope, $http, $location) {
+		$scope.workoutSearch = function () {
+			var searchTerms = $('#navbarInput-01').val();
+			$location.path('/search/' + searchTerms);
+
+		};
+
+		$scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+
+	}]);
 
 
+hbworkoutsApp.controller('searchCtrl', 
+	['$scope', '$http', '$location', 'growl', '$routeParams', 
+	function ($scope, $q, $location, growl, $routeParams) {
+
+	$scope.searchText = $routeParams.searchterms;
 	$scope.headline = "Hangboard Workouts";
 	var foundWorkouts={};
 	var Workouts = Parse.Object.extend("Workouts");
@@ -41,7 +96,7 @@ hbworkoutsApp.controller('homeCtrl', ['$scope', '$http', '$location', function (
   		  foundWorkouts = workoutList;
   		  $scope.$apply();
   		  setExpandStatus();
-
+  		  
 
   		},
   		error: function(object, error) {
@@ -50,7 +105,6 @@ hbworkoutsApp.controller('homeCtrl', ['$scope', '$http', '$location', function (
   }
 });//end query
 	$scope.goToPage = function(path){
-		console.log(path);
 		$location.path(path);
 		
 	};
@@ -74,8 +128,12 @@ $scope.isExpanded = [];
 
 }]);//end controller
 
-hbworkoutsApp.controller('addwWorkoutCtrl', ['$scope', '$http', '$location', function ($scope, $q, $location, $http) {
-
+hbworkoutsApp.controller('addwWorkoutCtrl', 
+	['$scope', '$http', '$location', 'growl',
+	function ($scope, $q, $location, $http, growl) {
+		$scope.workoutAddedMsg = function() {
+			growl.addSuccessMessage("Workout Was Added");
+		};
 }]);
 
 
@@ -107,6 +165,8 @@ hbworkoutsApp.controller('workoutCtrl',
    		 // error is a Parse.Error with an error code and description.
   }
 });//end query
+
+	$scope.lastthree = false;
 
 	var workout
 	var countdown;
@@ -143,7 +203,6 @@ function workoutTimer() {
 	//put minutes and seconds on the view
 		$scope.timerMinutes = minutes;
 		$scope.timerSeconds = seconds;
-		console.log('get ready: ' + countdown);
 		$scope.currentMsg = "Get Ready!";
 		$scope.nextMsg = reps[0].message;
 		$scope.$apply();
@@ -162,6 +221,7 @@ function workoutTimer() {
 };
 
 function runWorkout() {
+	$scope.lastthree = false;
 	currentStep = currentStep + 1;
 
 		repStep = repStep + 1;
@@ -173,7 +233,6 @@ function runWorkout() {
 			$scope.nextMsg = reps[repStep + 1].message;
 			$scope.$apply();
 		};
-		console.log('RepStep is ' + repStep);
 		steptime = reps[repStep].time;
 		$scope.currentMsg = reps[repStep].message;
 		$scope.$apply();
@@ -186,19 +245,22 @@ function runWorkout() {
 
 function stepTimer() {
 	steptime = steptime -1;
-	console.log(steptime);
 
 	//convert to minutes/secconds
 	var minutes = Math.floor(steptime / 60);
 	var seconds = steptime - minutes * 60;
-
-	console.log(minutes + ':' + seconds);
 	
 	//put minutes and seconds on the view
 	$scope.timerMinutes = minutes;
 	$scope.timerSeconds = seconds;
 	$scope.$apply();
 	
+	console.log('steptime = ' + steptime);
+	if (steptime <=3){
+		$scope.lastthree = true;
+		$scope.$apply();
+	};
+
 
 	if (steptime <= 0) {
 		clearInterval(stepCounter);

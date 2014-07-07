@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   <title>Hangboard Workouts</title>
 
-  <link rel="stylesheet" type="text/css" href="vendors/bootstrap.css/css/bootstrap.css">
-
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/flat-ui.css">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="vendors/angular-growl/build/angular-growl.min.css">
+
   
 
   <script type="text/javascript" src="vendors/jquery/jquery.js"></script>
   <script type="text/javascript" src="angular/angular.js"></script>
   <script type="text/javascript" src="angular/angular-route.js"></script>
+  <script type="text/javascript" src="angular/angular-sanitize.js"></script>
+  <script type="text/javascript" src="angular/angular-animate.js"></script>
+  <script type="text/javascript" src="vendors/angular-growl/build/angular-growl.js"></script>
 
 
   <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
@@ -20,6 +25,7 @@
   </script>
 
   <script type="text/javascript" src="angular/controllers/controller.js"></script>
+  <!--<script type="text/javascript" src="angular/controllers/navibarController.js"></script>-->
   <script type="text/javascript" src="angular/angular.audio.js"></script>
 <!--
   <script src="scripts/data.js"></script>
@@ -31,13 +37,13 @@
 
 <body>
 	<div class="container">
-		
+		<div ng-include src="'./views/includes/nav.html'"></div>
 		<div ng-view="">
 			
 		</div>
 
 	</div>
 
-
+  <div growl></div>
 </body>
 </html>

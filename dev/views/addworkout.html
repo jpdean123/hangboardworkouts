@@ -1,24 +1,49 @@
 
 	<h1>Add New Workout</h1>
 	<form>
-		Your E-mail: <input type="text" id="submitter_email"/><br/>
-		Title: <input type="text" id="workout_title"/><br/>
-		Primary Hangboard: <input type="text" id="workout_hangboard"/><br/>
-		Description: <input type="text" id="workout_description"/><br/>
+		<div class="halfpage_holder">
+			<div class="form_half">
+				<div class="form-group">
+ 					<div class="input-group">
+  						<span class="input-group-addon">Title</span>
+  					 	<input type="text" class="form-control" id="workout_title">
+				 	</div>
+				</div>
+				<div class="form-group">
+ 					<div class="input-group">
+  						<span class="input-group-addon">Description</span>
+  					 	<input type="text" class="form-control" id="workout_description">
+				 	</div>
+				</div>
+				<div class="form-group">
+ 					<div class="input-group">
+  						<span class="input-group-addon">Hangboard</span>
+  					 	<input type="text" class="form-control" id="workout_hangboard">
+				 	</div>
+				</div>
+				<div class="form-group">
+ 					<div class="input-group">
+  						<span class="input-group-addon">E-Mail</span>
+  					 	<input type="text" class="form-control" id="submitter_email">
+				 	</div>
+				</div>
+
+			</div>
+		</div>
 		<table  id="repInfoTable">
 		 
 			<thead>
-				<td></td>
-				<td>Description</td>
-				<td>Rep Message</td>
-				<td>Length (secs)</td>
+				<td class="workout_tables"></td>
+				<td class="workout_tables">Description</td>
+				<td class="workout_tables">Rep Message</td>
+				<td class="workout_tables">Length (secs)</td>
 			</thead>
 			<tbody>
 				<tr class="singleRep" id="rep0">
-					<td>Rep 1</td>
-					<td><input type="text" placeholder="" id="desc0"/></td>
-					<td><input type="text" placeholder="" id="msg0"/></td>
-					<td><input type="text" placeholder="" id="time0"/></td>
+					<td class="workout_tables">Rep 1</td>
+					<td class="workout_tables"><input type="text" class="form-control" placeholder="" id="desc0"/></td>
+					<td class="workout_tables"><input type="text" class="form-control" placeholder="" id="msg0"/></td>
+					<td class="workout_tables"><input type="text" class="form-control" placeholder="" id="time0"/></td>
 				</tr>
 				
 			</tbody>
