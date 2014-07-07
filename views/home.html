@@ -1,27 +1,11 @@
-<h1>{{headline}}</h1>
-<h2>Browse the workouts below or create your own!</h2>
-Search: <input type="text" ng-model="searchText"/>
-<button class="btn btn-primary btn-lg" ng-click="goToPage('/addworkout')">Contribute a New Workout!</button>
-<div>
-	<div class="workoutHolder" ng-repeat="workout in listOfWorkouts | filter:searchText">
-		
-		<h3 class="workoutTitle">{{ workout.get('title') }}</h3>
-		<div class="workoutInfo">
-			<div class="workoutLeft">
-				<p><strong>Description: </strong>{{ workout.get('description')}} </p><br/>
-				<p><strong>Built for Hangboard:</strong> {{ workout.get('hangboard')}} </p><br/>
-			</div>
-			<div class="workoutCenter" ng-show="isExpanded[$index]">
-				<p><strong>Reps in this workout:</strong></p>
-				<ul>
-					<li ng-repeat="rep in workout.get('reps')">{{rep.message}} for {{rep.time}} seconds</li>
-				</ul>
-			</div>
-			<div class="workoutRight">
-				<button class="btn btn-primary" ng-hide="isExpanded[$index]"ng-click="toggle($index)">Expand</button>
-				<button class="btn btn-warning" ng-show="isExpanded[$index]" ng-click="toggle($index)">Collapse</button>
-				<button class="btn btn-success btn-lg" ng-click="goToPage('/workout/' + workout.id)">Start Workout!</button>
-			</div>
-		</div>
-	</div>
-</div>	
+<h1>Welcome To SendTrain.xyz</h1>
+<h3>Take Control of your Climbing Training</h3>
+<ul>
+	<li>Easy to See Timer</li>
+	<li>Directions on your current and next step</li>
+	<li>Create your own workouts</li>
+	<li>Use existing workouts from the community</li>
+</ul>
+
+<a href="#/search"><button class="btn btn-hg btn-success">Find a Workout!</button></a>
+<a href="#/addworkout"><button class="btn btn-hg btn-primary">Contribute a Workout</button></a>
