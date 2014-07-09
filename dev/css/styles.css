@@ -93,6 +93,10 @@ body {
 	color:red;
 }
 
+#mce-EMAIL{
+	width: 50%;
+}
+
 /*--------------------add workout CSS ----------------------------------------------- */
 
 .workout_tables {
