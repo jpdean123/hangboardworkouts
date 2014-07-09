@@ -1,4 +1,4 @@
-var hbworkoutsApp = angular.module('hbworkoutsApp', ['ngRoute', 'angular-growl', 'ngAnimate']);
+var hbworkoutsApp = angular.module('hbworkoutsApp', ['ngRoute', 'angular-growl', 'ngAnimate', 'angulartics', 'angulartics.google.analytics']);
 
 hbworkoutsApp.config(function ($routeProvider, $locationProvider) {
  
