@@ -61,6 +61,10 @@ hbworkoutsApp.controller('testCtrl',
 
     $scope.addSpecialWarnMessage();
 
+    $scope.playTheSound = function() {
+    	var chime = $('#workoutChime')[0];
+    	chime.play();
+    };
 	}]);
 
 hbworkoutsApp.controller('navCtrl',
@@ -142,7 +146,8 @@ hbworkoutsApp.controller('workoutCtrl',
 	['$scope', '$routeParams', 
 	function ($scope, $routeParams) {
 
-	var audio = new Audio('assets/beep-02.mp3');
+	var chime = $('#workoutChime')[0];
+	//var audio = new Audio('assets/beep-02.mp3');
 	var selectedWorkout;
 	var workoutID = $routeParams.selID;
 
@@ -264,8 +269,7 @@ function stepTimer() {
 
 	if (steptime <= 0) {
 		clearInterval(stepCounter);
-		console.log('play sounds');
-		audio.play();
+		 chime.play();
 		
 
 			if (repStep >= totalSteps -1) {
