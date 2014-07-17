@@ -32,6 +32,18 @@ hbworkoutsApp.config(function ($routeProvider, $locationProvider) {
         templateUrl: './views/workout.html'
 
       })
+     .when('/help',
+      {
+        controller: 'helpCtrl',
+        templateUrl: './views/help.html'
+
+      })
+     .when('/thankyou',
+      {
+        controller: 'thankyouCtrl',
+        templateUrl: './views/thankyou.html'
+
+      })
     .when('/testpage',
     {
     	controller: 'testCtrl',
