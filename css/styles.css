@@ -97,6 +97,10 @@ body {
 	width: 50%;
 }
 
+.workoutLeft {
+	width: 50%;
+}
+
 /*--------------------add workout CSS ----------------------------------------------- */
 
 .workout_tables {
