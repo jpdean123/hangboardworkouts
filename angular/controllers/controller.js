@@ -135,7 +135,7 @@ hbworkoutsApp.controller('workoutCtrl',
 	['$scope', '$routeParams', 
 	function ($scope, $routeParams) {
 
-	var chime = "";
+	var chime = $('#workoutChime')[0];
 	//var audio = new Audio('assets/beep-02.mp3');
 	var selectedWorkout;
 	var workoutID = $routeParams.selID;
@@ -170,7 +170,7 @@ hbworkoutsApp.controller('workoutCtrl',
 	var steptime;
 
 	function initWorkout(sel) {
-	chime = $('#workoutChime')[0];
+	chime.load();
 	workout = sel;
 	title = workout.get('title');
 	hangboard = workout.get('hangboard');
