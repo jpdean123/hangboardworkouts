@@ -109,8 +109,19 @@ body {
 }
 
 
+/*------------------- Help Page! ----------------------------------------------------- */
 
+.helpdual {
+	width: 100%;
+	display:flex;
+	justify-content:space-between;
+	align-items: flex-start;
+}
 
+.helphalf {
+	padding: 2em;
+	width: 45%;
+}
 
 
 
