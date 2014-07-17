@@ -50,21 +50,10 @@ hbworkoutsApp.config(['growlProvider',
 hbworkoutsApp.controller('testCtrl',
 	['$scope', 'growl', 
 	function ($scope, growl) {
-		$scope.myVar = "hello world";
+		
 
-		$scope.addSpecialWarnMessage = function() {
-        growl.addWarnMessage("This adds a warn message", {ttl:5000});
-        growl.addInfoMessage("This adds a info message", {ttl:10000});
-        growl.addSuccessMessage("This adds a success message");
-        growl.addErrorMessage("This adds a error message");
-    };
 
-    $scope.addSpecialWarnMessage();
-
-    $scope.playTheSound = function() {
-    	var chime = $('#workoutChime')[0];
-    	chime.play();
-    };
+		
 	}]);
 
 hbworkoutsApp.controller('navCtrl',
@@ -269,7 +258,9 @@ function stepTimer() {
 
 	if (steptime <= 0) {
 		clearInterval(stepCounter);
+		console.log('this sound should play');
 		 chime.play();
+		 console.log('did it play? It should have played');
 		
 
 			if (repStep >= totalSteps -1) {
