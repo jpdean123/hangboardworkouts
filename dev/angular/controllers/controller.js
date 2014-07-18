@@ -172,6 +172,14 @@ hbworkoutsApp.controller('workoutCtrl',
   }
 });//end query
 
+	//check if its a custom workout
+	$scope.isCustom = false;
+	if (workoutID == "fG6r7ImwJH") {
+		$scope.isCustom = true;
+	} else {
+		$scope.isCustom = false;
+	};
+
 	$scope.lastthree = false;
 
 	var workout
@@ -181,16 +189,110 @@ hbworkoutsApp.controller('workoutCtrl',
 	var repStep = -1;
 	var steptime;
 
+	//if custom timer, build the array here
+	var onelistener;
+	var twolistener;
+	var threelistener;
+	var fourlistener;
+	var fivelistener;
+	var customWorkout = [];
+
+	function buildTheCustomWorkout (){
+		
+		//get values from the form
+		customSets = $('#sets').val();
+		customReps = $('#reps').val();
+		customHang = $('#hangtime').val();
+		customRest = $('#resttime').val();
+		customLongRest = $('#longresttime').val();
+		var hangmsg = "Hang";
+		var restmsg = "Rest";
+		var customSetOfReps = [];
+		console.log(customRest);
+		clearInterval(onelistener);
+		clearInterval(twolistener);
+		clearInterval(threelistener);
+		clearInterval(fourlistener);
+		clearInterval(fivelistener);
+
+		for (var i =  1 ; i <= customSets; i++) {
+			for (var x = 1; x <= customReps; x++) {
+				var thisHang = {};
+				var thisRest = {};
+				var repHangTime = customHang;
+				var repRestTime = customRest;
+				
+				thisHang.message = hangmsg;
+				thisHang.time = repHangTime;
+				customSetOfReps.push(thisHang);
+
+				thisRest.message = restmsg;
+				thisRest.time = repRestTime;
+				customSetOfReps.push(thisRest);
+
+			};
+			var thisLongRest = {};
+			thisLongRest.message = restmsg;
+			thisLongRest.time = customLongRest;
+			customSetOfReps.push(thisLongRest);
+
+
+		};
+		customWorkout.reps = customSetOfReps;
+		customWorkout.title = "Custome Workout";
+		customWorkout.hangboard = "Any";
+		customWorkout.descriptoin = "Well.... you built it";
+		console.log(customWorkout);
+
+
+		initWorkout();
+	};
+
+
+	$scope.$watch('custom.model1', function (newVal, oldVal){
+		onelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
+		
+	});
+	$scope.$watch('custom.model2', function (newVal, oldVal){
+		twolistener = setInterval(function(){buildTheCustomWorkout()}, 1);
+		
+	});
+	$scope.$watch('custom.model3', function (newVal, oldVal){
+		threelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
+		
+	});
+	$scope.$watch('custom.model4', function (newVal, oldVal){
+		fourlistener = setInterval(function(){buildTheCustomWorkout()}, 1);
+		
+	});
+	$scope.$watch('custom.model5', function (newVal, oldVal){
+		fivelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
+		
+	});
+
+
+
 	function initWorkout(sel) {
 	chime.load();
+	var custom = true;
+	if (workoutID == "fG6r7ImwJH") {
+		workout = customWorkout;
+		title = workout.title;
+		hangboard = workout.hangboard;
+		description = workout.description;
+		reps = workout.reps;
+
+	} else {
 	workout = sel;
+	console.log('this is the sel');
+	console.log(sel);
 	title = workout.get('title');
 	hangboard = workout.get('hangboard');
 	description = workout.get('description');
 	reps = workout.get('reps');
 	totalSteps = reps.length;
 	countdown = 4;
-	};
+	}};
 
 $scope.startWorkout = function () {
 	console.log('workout started');

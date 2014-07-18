@@ -20,6 +20,25 @@
 			</div>
 
 		</div>
+		<div class="custom-options" ng-show="isCustom">
+			<div class="custom-options-child">
+				<label for="sets">Number of Sets</label><input type="number" name="sets" id="sets" value="6" class="form-control" ng-model="custom.model1"/>
+			</div>
+			<div class="custom-options-child">
+				<label for="reps">Reps</label><input type="number" name="reps" id="reps" value="6" class="form-control" ng-model="custom.model2"/>
+			</div>
+			<div class="custom-options-child">
+				<label for="hangtime">Hang Time (sec)</label><input type="number" name="hangtime" id="hangtime" value="7" class="form-control" ng-model="custom.model3"/>
+			</div>
+			<div class="custom-options-child">
+				<label for="resttime">Rest Time (sec)</label><input type="number" name="resttime" id="resttime" value="3" class="form-control" ng-model="custom.model4"/>
+			</div>
+			
+			<div class="custom-options-child">
+				<label for="longresttime">Between Set Rest Time (sec)</label><input type="number" name="longresttime" id="longresttime" value="180" class="form-control" ng-model="custom.model5"/>
+			</div>
+			
+		</div>
 		<audio id="workoutChime">
 			<source src="assets/beep-02.mp3" type="audio/mpeg"/>
 		</audio>
