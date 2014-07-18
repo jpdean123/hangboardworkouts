@@ -249,6 +249,7 @@ hbworkoutsApp.controller('workoutCtrl',
 	};
 
 
+
 	$scope.$watch('custom.model1', function (newVal, oldVal){
 		onelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
 		
@@ -281,6 +282,8 @@ hbworkoutsApp.controller('workoutCtrl',
 		hangboard = workout.hangboard;
 		description = workout.description;
 		reps = workout.reps;
+		totalSteps = reps.length;
+		countdown = 4;
 
 	} else {
 	workout = sel;
@@ -312,6 +315,7 @@ function workoutTimer() {
 	//put minutes and seconds on the view
 		$scope.timerMinutes = minutes;
 		$scope.timerSeconds = seconds;
+		console.log($scope.timerSeconds);
 		$scope.currentMsg = "Get Ready!";
 		$scope.nextMsg = reps[0].message;
 		$scope.$apply();
