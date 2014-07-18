@@ -151,7 +151,14 @@ hbworkoutsApp.controller('workoutCtrl',
 	//var audio = new Audio('assets/beep-02.mp3');
 	var selectedWorkout;
 	var workoutID = $routeParams.selID;
+	var workout
+	var countdown;
+	var totalSteps;
+	var currentStep = 0;
+	var repStep = -1;
+	var steptime;
 
+	var pulledWorkout;
 	var Workouts = Parse.Object.extend("Workouts");
 	var query = new Parse.Query(Workouts);
 
@@ -159,7 +166,8 @@ hbworkoutsApp.controller('workoutCtrl',
 	query.find({
  		 success: function(result) {
   		  selectedWorkout = result[0];
-  		  initWorkout(selectedWorkout);
+  		  pulledWorkout = selectedWorkout;
+  		  initWorkout();
 
   		  $scope.$apply();
   		
@@ -271,16 +279,12 @@ hbworkoutsApp.controller('workoutCtrl',
 
 
 
-	var workout
-	var countdown;
-	var totalSteps;
-	var currentStep = 0;
-	var repStep = -1;
-	var steptime;
+	
 
-	function initWorkout(sel) {
+	function initWorkout() {
 		console.log('intiated the function');
 	chime.load();
+	
 	var custom = true;
 	if (workoutID == "fG6r7ImwJH") {
 		workout = customWorkout;
@@ -292,12 +296,14 @@ hbworkoutsApp.controller('workoutCtrl',
 		countdown = 4;
 		currentStep = 0;
 		repStep = -1;
+		console.log('from the true block');
 
 
 	} else {
-	workout = sel;
+	console.log(pulledWorkout);
+	workout = pulledWorkout;
 	console.log('this is the sel');
-	console.log(sel);
+	console.log(pulledWorkout);
 	title = workout.get('title');
 	hangboard = workout.get('hangboard');
 	description = workout.get('description');
