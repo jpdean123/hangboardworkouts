@@ -182,13 +182,6 @@ hbworkoutsApp.controller('workoutCtrl',
 
 	$scope.lastthree = false;
 
-	var workout
-	var countdown;
-	var totalSteps;
-	var currentStep = 0;
-	var repStep = -1;
-	var steptime;
-
 	//if custom timer, build the array here
 	var onelistener;
 	var twolistener;
@@ -248,32 +241,45 @@ hbworkoutsApp.controller('workoutCtrl',
 		initWorkout();
 	};
 
+	$scope.custommodel1 = 1;
+	$scope.custommodel2 = 6;
+	$scope.custommodel3 = 7;
+	$scope.custommodel4 = 3;
+	$scope.custommodel5 = 120;
 
 
-	$scope.$watch('custom.model1', function (newVal, oldVal){
+	$scope.$watch('custommodel1', function (newVal, oldVal){
 		onelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
 		
 	});
-	$scope.$watch('custom.model2', function (newVal, oldVal){
+	$scope.$watch('custommodel2', function (newVal, oldVal){
 		twolistener = setInterval(function(){buildTheCustomWorkout()}, 1);
 		
 	});
-	$scope.$watch('custom.model3', function (newVal, oldVal){
+	$scope.$watch('custommodel3', function (newVal, oldVal){
 		threelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
 		
 	});
-	$scope.$watch('custom.model4', function (newVal, oldVal){
+	$scope.$watch('custommodel4', function (newVal, oldVal){
 		fourlistener = setInterval(function(){buildTheCustomWorkout()}, 1);
 		
 	});
-	$scope.$watch('custom.model5', function (newVal, oldVal){
+	$scope.$watch('custommodel5', function (newVal, oldVal){
 		fivelistener = setInterval(function(){buildTheCustomWorkout()}, 1);
 		
 	});
 
 
 
+	var workout
+	var countdown;
+	var totalSteps;
+	var currentStep = 0;
+	var repStep = -1;
+	var steptime;
+
 	function initWorkout(sel) {
+		console.log('intiated the function');
 	chime.load();
 	var custom = true;
 	if (workoutID == "fG6r7ImwJH") {
@@ -284,6 +290,9 @@ hbworkoutsApp.controller('workoutCtrl',
 		reps = workout.reps;
 		totalSteps = reps.length;
 		countdown = 4;
+		currentStep = 0;
+		repStep = -1;
+
 
 	} else {
 	workout = sel;
@@ -298,6 +307,7 @@ hbworkoutsApp.controller('workoutCtrl',
 	}};
 
 $scope.startWorkout = function () {
+	initWorkout();
 	console.log('workout started');
 	workoutCounter = setInterval(workoutTimer, 1000);
 
