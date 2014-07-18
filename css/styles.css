@@ -82,6 +82,20 @@ h4 {
 	line-height: 150%;
 }
 
+.custom-options {
+	display:flex;
+	margin-bottom: 2em;
+	text-align: center;
+}
+
+.custom-options-child {
+	padding: 1em;
+}
+
+.custom-options-child > input {
+	margin: auto;
+	width: 60%;
+}
 
 /*------------------------------------- Home Page CSS ------------------------------------ */
 .workoutHolder {
