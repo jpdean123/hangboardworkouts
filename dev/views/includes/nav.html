@@ -9,6 +9,7 @@
     <ul class="nav navbar-nav">           
       <li ng-class="{ active: isActive('/search')}"><a href="#/search">Find a Workout</a></li>
       <li ng-class="{ active: isActive('/addworkout')}"><a href="#/addworkout">Contribute</a></li>
+      <li>{{ currentUser }}</li>
     </ul>           
     <form class="navbar-form navbar-right" role="search" ng-submit="workoutSearch()">
       <div class="form-group">

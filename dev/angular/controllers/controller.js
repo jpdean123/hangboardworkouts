@@ -5,7 +5,7 @@ hbworkoutsApp.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/',
       {
-      	//controller: 'homeCtrl',
+      	controller: 'homeCtrl',
         templateUrl: './views/home.html'
 
       })
@@ -59,18 +59,77 @@ hbworkoutsApp.config(['growlProvider',
 		growlProvider.globalTimeToLive(5000);
 	}]);
 
+hbworkoutsApp.service('usersService', ['$rootScope', '$location', '$window', '$q', function ($rootScope, $location, $window, $q){
+	this.signUp = function (username, name, password) {
+		var deferred = $q.defer();
+
+		var user = new Parse.User();
+		user.set("username", username);
+		user.set("password", password);
+		user.set("name", name);
+ 
+		user.signUp(null, {
+		  success: function(user) {
+  		  // Hooray! Let them use the app now.
+  		 $window.currentUser = user;
+  		  deferred.resolve(user);
+  		  
+  		},
+ 		 error: function(user, error) {
+  		  // Show the error message somewhere and let the user try again.
+   		 alert("Error: " + error.code + " " + error.message);
+ 		 }
+		});
+
+		return deferred.promise;
+		}; // end signup function
+
+		
+}]);
+
 hbworkoutsApp.controller('testCtrl',
-	['$scope', 'growl', 
-	function ($scope, growl) {
+	['$scope', 'usersService', '$window', 'growl', '$location',  
+	function ($scope, usersService, $window, growl, $location) {
+		console.log('im in the controller');
 		
+	$scope.signupForm = function () {
+		var usernameInput = $('#username').val();
+		var nameInput = $('#name').val();
+		var passwordInput = $('#password').val();
 
+		usersService.signUp(usernameInput, nameInput, passwordInput).then(function (user){
+			$scope.username = user.get('username');
+			$scope.named = user.get('name');
+			console.log($scope.username);
+			growl.addSuccessMessage("Welcome to SendTrain, " + $scope.named);
+			$scope.currentUser = $window.currentUser;
+			$location.path('/');
+		});
+	};	
+	
+	Parse.Cloud.run('hello', { themessage: "hello world" }, {
+  		success: function(result) {
+  		  // result is 'Hello world!'
+  		  console.log(result);
+  		},
+ 		 error: function(error) {
+  		}
+	});
 
-		
+	// Parse.Cloud.run('sendASMS', {}, {
+	// 	success: function (result) {
+
+	// 	},
+	// 	error: function(error) {
+ //  		}
+	// });
+
 	}]);
 
+
 hbworkoutsApp.controller('navCtrl',
-	['$scope', '$http', '$location',
-	function ($scope, $http, $location) {
+	['$scope', '$http', '$location', 'usersService', 
+	function ($scope, $http, $location, usersService) {
 		$scope.workoutSearch = function () {
 			var searchTerms = $('#navbarInput-01').val();
 			$location.path('/search/' + searchTerms);
@@ -80,9 +139,16 @@ hbworkoutsApp.controller('navCtrl',
 		$scope.isActive = function (viewLocation) { 
         return viewLocation === $location.path();
     };
-
+    	$scope.currentUser = Parse.User.current().get('name');
 	}]);
 
+hbworkoutsApp.controller('homeCtrl',
+	['$scope', 'usersService', '$window', 'growl', '$location',  
+	function ($scope, usersService, $window, growl, $location) {
+		
+		console.log(usersService.currentUser);
+
+	}]);
 
 hbworkoutsApp.controller('searchCtrl', 
 	['$scope', '$http', '$location', 'growl', '$routeParams', 
@@ -109,6 +175,8 @@ hbworkoutsApp.controller('searchCtrl',
    		 // error is a Parse.Error with an error code and description.
   }
 });//end query
+
+
 	$scope.goToPage = function(path){
 		$location.path(path);
 		
@@ -139,6 +207,8 @@ hbworkoutsApp.controller('addwWorkoutCtrl',
 		$scope.workoutAddedMsg = function() {
 			growl.addSuccessMessage("Workout Was Added");
 		};
+
+	
 }]);
 
 
@@ -319,6 +389,10 @@ $scope.startWorkout = function () {
 
 };
 
+restartWorkout = function() {
+	console.log('workout re started');
+	stepCounter = setInterval(stepTimer, 1000);
+};
 
 
 function workoutTimer() {
@@ -393,9 +467,7 @@ function stepTimer() {
 
 	if (steptime <= 0) {
 		clearInterval(stepCounter);
-		console.log('this sound should play');
 		 chime.play();
-		 console.log('did it play? It should have played');
 		
 
 			if (repStep >= totalSteps -1) {
@@ -413,7 +485,8 @@ function stepTimer() {
 
 };
 
-function resettimer() {
+$scope.resettimer = function() {
+	console.log('reset fired');
 	location.reload();
 
 
@@ -421,9 +494,21 @@ function resettimer() {
 	//location.reload();
 };
 
-function pausetimer() {
-	clearInterval(stepCounter);
+var paused = false;
+$scope.pauseText = "Pause";
 
+$scope.pausetimer = function() {
+	//check if the timer is currently paused, then either restart or pause it
+	if (!paused) {
+		clearInterval(stepCounter)
+		$scope.pauseText = "Resume";
+		paused = true;
+	} else if (paused) {
+		restartWorkout();
+		$scope.pauseText = "Pause";
+		paused = false;
+	};
+	
 };
 
 
